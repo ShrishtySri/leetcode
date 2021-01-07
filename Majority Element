@@ -1,0 +1,12 @@
+int majorityElement(vector<int>& nums) {
+        unordered_map<int,int> ar;
+        int n=nums.size();
+        
+        for(int i=0;i<n;i++){
+            ar[nums[i]]++;
+            if(ar[nums[i]]>n/2){
+                return nums[i];
+            }
+        }
+        return 0;
+    }
