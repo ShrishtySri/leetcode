@@ -1,0 +1,15 @@
+vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int>v;
+        res.push_back(v);
+        
+        for(int n: nums){
+            int size=res.size();
+            for(int i=0;i<size;i++){
+                auto x=res[i];
+                x.push_back(n);
+                res.push_back(x);
+            }
+        }
+        return res;
+    }
