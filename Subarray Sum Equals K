@@ -1,0 +1,17 @@
+int subarraySum(vector<int>& nums, int k) {
+        map<int,int> m;
+        int sum=0,count=0;
+        for(int i=0;i<nums.size();i++){
+            sum+=nums[i];
+            if(sum==k){
+                count++;
+            }
+            if(m.find(sum-k)!=m.end()){
+                count+=m[sum-k];
+            }else{
+                m.insert({sum,0});
+            }
+            m[sum]++;
+        }
+        return count;
+    }
