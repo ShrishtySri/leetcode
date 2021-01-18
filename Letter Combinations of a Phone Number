@@ -1,0 +1,26 @@
+class Solution {
+public:
+    void combination(string str, string digits, int index=0){
+        if(digits.size()==index){
+            res.push_back(str);
+            return;
+        }
+        int j=digits[index]-'0';
+        for(int i=0;i<m[j].size();i++){
+            str.push_back(m[j][i]);
+            combination(str,digits,index+1);
+            str.pop_back();
+        }
+        return;
+    }
+    vector<string> res; 
+    vector<string>m{" "," ","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    
+    vector<string> letterCombinations(string digits) {
+        if(digits.length()==0) 
+            return res;
+        string str;
+        combination(str, digits);
+        return res;
+    }
+};
