@@ -1,0 +1,48 @@
+class Solution {
+public:
+    vector<int> rearrangeBarcodes(vector<int>& barcodes) 
+    {
+        map<int,int> count;
+        for(auto i:barcodes)
+        {
+            count[i]++;
+        }
+        
+        vector<int> ans;
+        //pair<int,int> -> pair<number,frequency>
+        priority_queue<pair<int,int> , vector<pair<int,int>> , Comp> pq(count.begin(),count.end());
+        pair<int,int> top1,top2;
+        while(pq.size()>=2)
+        {
+            top1 = pq.top(); pq.pop();
+            top2 = pq.top(); pq.pop();
+            ans.push_back(top1.first);
+            ans.push_back(top2.first);
+            top1.second--;
+            top2.second--;
+            if(top1.second>0)
+                pq.push({top1.first,top1.second});
+            if(top2.second>0)
+                pq.push({top2.first,top2.second});
+        }
+        
+        if(!pq.empty())
+        {
+            auto last = pq.top(); pq.pop();
+            ans.push_back(last.first);
+        }
+        
+        
+        return ans;
+        
+        
+    }
+    
+    struct Comp
+    {
+        bool operator()(pair<int,int> &one, pair<int,int> &two)
+        {
+            return one.second < two.second;
+        }
+    };
+};
