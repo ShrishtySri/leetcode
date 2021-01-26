@@ -1,0 +1,43 @@
+class Solution {
+public:
+    string minWindow(string S, string T) {
+        int m=S.size(), n=T.size();
+        if(m<n) return "";
+        unordered_map<char, int> S_ht, T_ht;
+        
+        for(char t : T)
+            T_ht[t]++;
+        
+        int left=0, counter=0, start=0, len=INT_MAX;
+        for(int right=0; right<m; right++){
+            S_ht[S[right]]++;
+            if(T_ht.find(S[right]) != T_ht.end() && S_ht[S[right]] == T_ht[S[right]]) counter++;
+            
+            while(left<=right && counter == T_ht.size()){
+                if(right-left+1<len){
+                    start=left;
+                    len=right-left+1;
+                }
+                S_ht[S[left]]--;
+                if(T_ht.find(S[left]) != T_ht.end() && S_ht[S[left]] < T_ht[S[left]]) counter--;
+                left++;
+            }
+        }
+        if(len == INT_MAX) return "";
+        return S.substr(start, len);
+    }
+};
+
+/*
+Algorithm outline:
+1. store char - count in T_ht
+2. for loop for right, add char - count in S_ht only if in T_ht
+3. if fulfills min req, got ans. Check b counter which increments when req fulfilled, ==
+4. move left till fullfill, remove, when not fulfill counter--, <
+
+ 0123456789 10 11 12
+"ADOBECODEB A  N  C", A-1, B-, C-
+
+"ABC" A-1, B-1, C-1
+
+*/
