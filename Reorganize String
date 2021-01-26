@@ -4,10 +4,11 @@ public:
         string result="";
         priority_queue<pair<int,char>> pq;
         unordered_map<char,int> mp;
-        for(auto s : S) 
-            mp[s]++;
-        for(auto m : mp) 
-            pq.push({m.second , m.first});
+        for(int i=0; i<S.length();i++)
+            mp[S[i]]++;
+        for(char c='a'; c<='z'; c++)
+            if(mp[c])
+                pq.push(make_pair(mp[c],c));
         
         while(pq.size()>1) {
             auto top1 = pq.top();
