@@ -3,7 +3,7 @@ public:
     bool valid(string s){
         int n=s.length();
         if(n>3) return false;
-        if(s.find('0')!=string::npos&&n>1) return false;
+        if(s.front()=='0'&&n>1) return false;
         int x=stoi(s);
         return (x>=0&&x<=255);
     }
@@ -11,17 +11,16 @@ public:
     vector<string> restoreIpAddresses(string s) {
         vector<string> res;
         int n=s.length();
-        //if(n<4) return res;
-        for(int i=1;i<4&&i<n;++i){
+        for(int i=1;i<4&&i<n;i++){
             string s1=s.substr(0,i);
             if(!valid(s1))
               continue;
-            for(int j=1;j<4&&i+j<n;++j){
-                string s2=s.substr(i,i+j);
+            for(int j=1;j<4&&i+j<n;j++){
+                string s2=s.substr(i,j);
                 if(!valid(s2))
                     continue;
-                for(int k=1;k<4&&i+j+k<n;++k){
-                    string s3=s.substr(j,i+j+k);
+                for(int k=1;k<4&&i+j+k<n;k++){
+                    string s3=s.substr(i+j,k);
                     string s4=s.substr(i+j+k);
                     if((!valid(s3))||(!valid(s4)))
                         continue;
