@@ -1,0 +1,24 @@
+class Solution {
+    int cal(int startRod, int endRod, vector<int>& cuts, vector<vector<int>>& dp,int startCut, int endCut){
+        if (startCut > endCut) return 0;
+        if(dp[startCut][endCut] != -1){
+            return dp[startCut][endCut];
+        }
+        if (startCut == endCut) return endRod - startRod;
+        int result = INT_MAX;
+        for (int i = startCut; i <= endCut; i++){
+             int val = (endRod - startRod) + cal(startRod, cuts[i], cuts, dp, startCut, i - 1) + cal(cuts[i], endRod, cuts, dp, i + 1, endCut); 
+             result = min(val, result);
+        }
+        return dp[startCut][endCut] = (result == INT_MAX ? 0 : result);
+}
+public:
+    int minCost(int n, vector<int>& cuts) {
+        int res = INT_MAX, m = cuts.size();
+        sort(cuts.begin(), cuts.end());
+        vector<vector<int>> dp(m + 1, vector<int>(m + 1, -1));
+        
+        res = cal(0, n, cuts, dp, 0, m - 1);
+        return res;
+    }
+};
