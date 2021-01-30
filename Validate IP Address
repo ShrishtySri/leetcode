@@ -84,3 +84,63 @@ public:
         return ans;
     }
 };
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class Solution {
+public:
+    string validIPAddress(string IP) {
+        int i=0, n=IP.size();
+        
+        while(i<n && (IP[i] != '.' && IP[i] != ':')) i++;
+        if(i==n) return "Neither";
+        
+        if(IP[i] == '.'){
+            i=0;
+            int counter=0;
+            string partial = "";
+            while(i<n){
+                while(i<n && IP[i] != '.'){
+                    partial += IP[i];
+                    if(!isdigit(IP[i])) return "Neither"; 
+                    i++;
+                }
+                i++;
+                
+                if(partial.size()>1 && partial[0] == '0') return "Neither";
+                if(partial.size() == 0) return "Neither";
+                if(partial.size()>3) return "Neither";
+                int val = stoi(partial);
+                
+                if(val<0 || val>255) return "Neither";
+                counter++;
+                partial="";
+            }
+            if(counter!=4 || IP[IP.size()-1] == '.') return "Neither";
+            
+            return "IPv4";
+        }
+        else{
+            i=0;
+            int counter=0;
+            string partial = "";
+            while(i<n){
+                while(i<n && IP[i] != ':'){
+                    partial += IP[i];
+                    if((!isdigit(IP[i])) && ((IP[i]<'A') || (IP[i]>'F' && IP[i]<'a' ) || (IP[i]>'f'))) return "Neither"; 
+                    i++;
+                }
+                i++;
+                if(partial.size()<1 || partial.size()>4) return "Neither";
+                if(partial.size() == 0) return "Neither";
+                
+                counter++;
+                partial="";
+            }
+            if(counter!=8 || IP[IP.size()-1] == ':') return "Neither";
+            
+            return "IPv6";
+        }
+        return "Neither";
+    }
+};
+
