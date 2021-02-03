@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string key(string s){
+        vector <int> v;
+        for(int i=0;i<s.size(); i++){
+            v.push_back(s[i]-'a');
+        }
+        sort(v.begin(),v.end());
+        string res;
+        for(int i=0;i<v.size();i++)
+            res+=v[i]-'0';
+        return res;
+    }
+    vector<vector<string>> groupAnagrams(vector<string>& str) {
+        unordered_map<string, vector<string>>m;
+        vector<vector<string>> res;
+        for(int i=0;i<str.size();i++){
+            string s= str[i];
+            string freq = key(s);
+            m[freq].push_back(s);
+        }
+        for(auto i:m){
+            res.push_back(i.second);
+        }
+        return res;
+    }
+};
