@@ -1,0 +1,28 @@
+/******************************************************************************
+// gfg
+//https://www.geeksforgeeks.org/transform-one-string-to-another-using-minimum-number-of-given-operation/
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    string A="EACBD";
+    string B="EABCD";
+    int n=A.length();
+    int i=n-1,j=n-1,count=0;
+    while(j>=0){
+        if(A[i]==B[j]){
+            i--;
+            j--;
+        }else{
+            char c=A[i];
+            A.erase(A.begin()+i);
+            A.insert(0,1,c);
+            count++;
+        }
+    }
+    cout<<count;
+    return 0;
+}
